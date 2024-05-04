@@ -81,10 +81,10 @@ def distance_measurement2():
 
 try:
     while True:
-        pressed0 = bool(GPIO.input(12, GPIO.HIGH))
-        pressed1 = bool(GPIO.input(13, GPIO.HIGH))
-        pressed2 = bool(GPIO.input(16, GPIO.HIGH))
-        pressed3 = bool(GPIO.input(17, GPIO.HIGH))
+        pressed0 = bool(GPIO.input(12) == GPIO.HIGH)
+        pressed1 = bool(GPIO.input(13) == GPIO.HIGH)
+        pressed2 = bool(GPIO.input(16) == GPIO.HIGH)
+        pressed3 = bool(GPIO.input(17) == GPIO.HIGH)
         distance = distance_measurement()
         if pressed0:
             sensitivity = change_sensitivity(0)
