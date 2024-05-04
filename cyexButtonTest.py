@@ -20,14 +20,10 @@ GPIO.setup(trigPin2, GPIO.OUT)
 GPIO.setup(echoPin2, GPIO.IN)
 GPIO.setup(vibrationPin2, GPIO.OUT)
 
-GPIO.setup(switches, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+for switch in switches:
+    GPIO.setup(switch, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
-def change_sensitivity(switches):
-    val = int
-    for s in switches:
-        while (GPIO.input(switches[s] == True):
-               val = s
-               break
+def change_sensitivity(val):
     if val == 0:
         return 10
     elif val == 1:
@@ -37,7 +33,7 @@ def change_sensitivity(switches):
     elif val == 3:
         return 100
     else:
-        return 10 #just in case something weird happens
+        return 60 #just in case something weird happens
     
         
 
@@ -85,8 +81,22 @@ def distance_measurement2():
 
 try:
     while True:
+        pressed0 = bool(GPIO.input(12, GPIO.HIGH))
+        pressed1 = bool(GPIO.input(13, GPIO.HIGH))
+        pressed2 = bool(GPIO.input(16, GPIO.HIGH))
+        pressed3 = bool(GPIO.input(17, GPIO.HIGH))
         distance = distance_measurement()
-        sensitivity = change_sensitivity(switches)
+        if pressed0:
+            sensitivity = change_sensitivity(0)
+        elif pressed1:
+            sensitivity = change_sensitivity(1)
+        elif pressed2:
+            sensitivity = change_sensitivity(2)
+        elif pressed3:
+            sensitivity = change_sensitivity(3)
+        else:
+            sensitivity = change_sensitivity(4)
+        print(f"Sensitivity: {sensitivity} cm")
         if distance < sensitivity:
             GPIO.output(vibrationPin, GPIO.HIGH)
         else:
